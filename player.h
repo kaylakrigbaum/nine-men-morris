@@ -6,5 +6,13 @@
 #define PLAYER_H
 
 //main declarations of player class
+class player {
+    public:
+        int player;
+        int pieceCount;
+        int placedPieces;
+        int phase;
+        void move ();
+};
 
 #endif
