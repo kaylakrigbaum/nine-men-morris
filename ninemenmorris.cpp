@@ -24,6 +24,17 @@ int turn() {
     return turn;
 };
 
+
+//is passed in the 2d array of board
+//outputs the display of the board
+void board(int board[7][7], int size = 7) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; i < size; j++) {
+            cout << board[i][j] << " \n"[j == size-1];
+        }
+    }
+}
+
 //this is where all the main game logic will go
 int main() {
 
@@ -66,8 +77,6 @@ if (playing) {
     //check piece count
     if ((player1.pieceCount < 3) || (player2.pieceCount < 3)) {
         if (player1.pieceCount < 3) {
-            //print graph
-
             //alert winner
             cout << "Player 2 has won, duces bitch!" << endl;
             
@@ -75,8 +84,6 @@ if (playing) {
             playing = false;
         }
         else {
-            //print graph
-
             //alert winner
             cout << "Player 1 has won, duces bitch!" << endl;
             
