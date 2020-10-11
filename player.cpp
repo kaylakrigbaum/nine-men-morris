@@ -5,7 +5,7 @@
 #include "player.h"
 
 //main definition of player class
-void player::move () {
+void Player::move () {
 
 }
 

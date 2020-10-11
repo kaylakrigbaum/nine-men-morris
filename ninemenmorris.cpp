@@ -8,19 +8,21 @@
 using namespace std;
 
 //decides if the game is active
-//returns: true or false
+//returns: true or false    
 bool menu() {
-    bool menu = false;
+    char menu;
     cout << "Would you like to begin the game?" << endl;
     cin >> menu;
-    return menu;
+    if (toupper(menu) == 'Y')
+        return true;
+    return false;
 };
 
 //decides who's turn it is when game begins initially
-//returns: a 1 or 1 for p1 or p2
+//returns: a 1 or 2 for p1 or p2
 int turn() {
     int turn = 0;
-    turn = rand()%3 +1;
+    turn = 1 + (rand() % static_cast<int>(2 - 1 + 1));
     return turn;
 };
 
@@ -54,7 +56,7 @@ if (playing) {
     int board[7][7] = {0};
 
     //create player objects
-    player player1, player2;
+    Player player1, player2;
 
     //randomize turn
     int playerTurn = turn();

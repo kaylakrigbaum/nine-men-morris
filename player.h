@@ -6,7 +6,7 @@
 #define PLAYER_H
 
 //main declarations of player class
-class player {
+class Player {
     public:
         int player;
         int pieceCount;
