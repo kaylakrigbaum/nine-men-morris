@@ -13,6 +13,7 @@ bool menu() {
     char menu;
     cout << "Would you like to begin the game?" << endl;
     cin >> menu;
+    cout << endl << endl << endl;
     if (toupper(menu) == 'Y')
         return true;
     return false;
@@ -27,19 +28,66 @@ int selectPlayerTurns() {
 };
 
 
-//is passed in the 2d array of board
-//outputs the display of the board
-void displayBoard(vector<vector<int>> board, int rows, int cols) {
+//takes in game board and model of valid board. outputs game board based on which nodes in the valid board are legal nodes
+void displayBoard(vector<vector<int>> board, vector<vector<int>> validBoard, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
+        cout << i + 1 << "   ";
         for (int j = 0; j < cols; j++) {
-            cout << board[i][j] << " ";
+            if (validBoard[i][j] == 1)
+                cout << board[i][j] << " ";
+            else
+                cout <<  "  ";
         }
         cout << "\n";
     }
+
+    cout << "    a b c d e f g" << endl << endl;
 }
 
-void placementStage(Player white, Player black, int board)
+//stage 1: players place their pieces.
+void placementStage(Player& white, Player& black, vector<vector<int>> board, vector<vector<int>> validBoard)
 {
+    string currentPlayer = "white";
+    int currentTurnNum = 1;
+    string move;
+    while (white.placedPieces < 9 || black.placedPieces < 9)
+    {
+        cout << "It is " << currentPlayer << "'s turn. Enter a location to place a piece: \n";
+        cin >> move;
+        cout << endl << endl;
+
+        //convert column letter to index
+        char colChar = move[0];
+
+        int colNum = int(colChar) - 97;
+        int rowNum = move[1] - '0' - 1;
+
+        //check if move is legal
+        if (colNum < validBoard.size() && rowNum < validBoard.size() && validBoard[rowNum][colNum] == 1 && board[rowNum][colNum] == 0)
+        {
+            board[rowNum][colNum] = currentTurnNum;
+            if (currentTurnNum == 1)
+            {
+                white.placedPieces += 1;
+                currentPlayer = "black";
+                currentTurnNum = 2;
+            }
+            else
+            {
+                black.placedPieces += 1;
+                currentPlayer = "white";
+                currentTurnNum = 1;
+            }
+
+            displayBoard(board, validBoard, 7, 7);
+        }
+        else
+        {
+            cout << "Invalid location" << endl;
+            continue;
+        }
+
+    }
     return;
 }
 
@@ -72,16 +120,16 @@ int main() {
 
         //begin the game turns in loop
         while (playing) {
-            displayBoard(validBoard, 7, 7);
+            displayBoard(board, validBoard, 7, 7);
         
             //if the turn is player1
             if (playerTurn == 1) {
-
+                placementStage(player1, player2, board, validBoard);
             }
 
             //if the turn is player2
             else {
-
+                placementStage(player2, player1, board, validBoard);
             }
 
             //print graph

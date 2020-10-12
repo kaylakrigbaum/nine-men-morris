@@ -8,6 +8,7 @@
 //main declarations of player class
 class Player {
     public:
+        Player();
         int player;
         int pieceCount;
         int placedPieces;
