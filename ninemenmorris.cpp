@@ -66,6 +66,7 @@ void placementStage(Player& white, Player& black, vector<vector<int>> board, vec
         if (colNum < validBoard.size() && rowNum < validBoard.size() && validBoard[rowNum][colNum] == 1 && board[rowNum][colNum] == 0)
         {
             board[rowNum][colNum] = currentTurnNum;
+            //check for mill
             if (currentTurnNum == 1)
             {
                 white.placedPieces += 1;
