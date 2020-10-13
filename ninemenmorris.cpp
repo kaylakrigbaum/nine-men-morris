@@ -154,15 +154,10 @@ bool testBoardCreation(vector<vector<int>> board, int size) {
     return board.size() == size;
 }
 
-bool checkForMill(vector<vector<int>> board)
-{
-    return true;
-}
-
 bool testMills(vector<vector<int>> board)
 {
     vector<vector<int>> wrongBoard(7, vector<int>(7, 0));
-    return (checkForMill(board) == true && checkForMill(wrongBoard) == false);
+    return (checkForMill(board, true, "white") == true && checkForMill(wrongBoard, true, "white") == false);
 }
 
 
