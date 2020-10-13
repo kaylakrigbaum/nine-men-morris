@@ -3,6 +3,7 @@
 #include <cstring>
 #include <vector>
 #include <random>
+#include <assert.h>
 #include "player.h"
 
 using namespace std;
@@ -43,6 +44,24 @@ void displayBoard(vector<vector<int>> board, vector<vector<int>> validBoard, int
 
     cout << "    a b c d e f g" << endl << endl;
 }
+
+bool testBoardCreation(vector<vector<int>> board, int size) {
+    return board.size() == size;
+}
+
+bool checkForMill(vector<vector<int>> board)
+{
+    return true;
+}
+
+bool testMills(vector<vector<int>> board)
+{
+    vector<vector<int>> wrongBoard(7, vector<int>(7, 0));
+    return (checkForMill(board) == true && checkForMill(wrongBoard) == false);
+}
+
+
+
 
 //stage 1: players place their pieces.
 void placementStage(Player& white, Player& black, vector<vector<int>> board, vector<vector<int>> validBoard)
@@ -121,41 +140,49 @@ int main() {
 
         //begin the game turns in loop
         while (playing) {
-            displayBoard(board, validBoard, 7, 7);
-        
-            //if the turn is player1
-            if (playerTurn == 1) {
-                placementStage(player1, player2, board, validBoard);
-            }
+            if (testBoardCreation(board, 7)) {
+                displayBoard(board, validBoard, 7, 7);
 
-            //if the turn is player2
-            else {
-                placementStage(player2, player1, board, validBoard);
-            }
-
-            //print graph
-
-            //check piece count
-            if ((player1.pieceCount < 3) || (player2.pieceCount < 3)) {
-                if (player1.pieceCount < 3) {
-                    //alert winner
-                    cout << "Player 2 has won, duces bitch!" << endl;
-            
-                    //end game
-                    playing = false;
+                //if the turn is player1
+                if (playerTurn == 1) {
+                    placementStage(player1, player2, board, validBoard);
                 }
+
+                //if the turn is player2
                 else {
-                    //alert winner
-                    cout << "Player 1 has won, duces bitch!" << endl;
-            
-                    //end game
-                    playing = false;
+                    placementStage(player2, player1, board, validBoard);
                 }
-            }
 
-            //next round
-            cout << "Begin next turn round!" << endl;
+                //print graph
+
+                //check piece count
+                if ((player1.pieceCount < 3) || (player2.pieceCount < 3)) {
+                    if (player1.pieceCount < 3) {
+                        //alert winner
+                        cout << "Player 2 has won, duces bitch!" << endl;
+
+                        //end game
+                        playing = false;
+                    }
+                    else {
+                        //alert winner
+                        cout << "Player 1 has won, duces bitch!" << endl;
+
+                        //end game
+                        playing = false;
+                    }
+                }
+
+                //next round
+                cout << "Begin next turn round!" << endl;
+            }
+            else {
+                cout << "Something went wrong";
+                system("PAUSE");
+                return 0;
+            }
         }
+            
     }
     return 0;
 }
