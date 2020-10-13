@@ -27,6 +27,98 @@ int selectPlayerTurns() {
     return turn;
 };
 
+//function that will check and verify a mill
+bool checkForMill(vector<vector<int>> board, bool check, string currentPlayer)
+{
+	//this switch will hold all possible mills, each index in the straight lines should be equal to each other. 
+	switch(check)
+	{
+		case 0:
+			if (board[0][0] == board[0][3] && board[0][0] == board[0][6] && board[0][0] != 0)//top horizontal
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+			break;
+
+		case 1:
+			if (board[1][1] == board[1][3] && board[1][1] == board[1][5] && board[1][1] != 0)//left vertical
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+			break;
+
+		case 2:
+			if (board[2][2] == board[2][3] && board[2][2] == board[2][4] && board[2][2] != 0)//bottom horizontal
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+			break;
+
+		case 3:
+			if (board[3][0] == board[3][1] && board[3][0] == board[3][2] && board[3][0] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+			break;
+		
+		case 4:
+			if (board[3][4] == board[3][5] && board[3][4] == board[3][6] && board[3][4] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 5:
+			if (board[4][2] == board[4][3] && board[4][2] == board[4][4] && board[4][2] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 6:
+			if (board[5][1] == board[5][3] && board[5][1] == board[5][5] && board[5][1] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 7:
+			if (board[6][0] == board[6][3] && board[6][0] == board[6][6] && board[6][0] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 8:
+			if (board[0][0] == board[3][0] && board[0][0] == board[6][0] && board[0][0] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 9:
+			if (board[1][1] == board[3][1] && board[1][1] == board[5][1] && board[1][1] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 10:
+			if (board[2][2] == board[3][2] && board[2][2] == board[4][2] && board[2][2] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+		
+		case 11:
+			if (board[0][3] == board[1][3] && board[0][3] == board[2][3] && board[0][3] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 12:
+			if (board[4][3] == board[5][3] && board[4][3] == board[6][3] && board[4][3] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 13:
+			if (board[2][4] == board[3][4] && board[2][4] == board[4][4] && board[2][4] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 14:
+			if (board[1][5] == board[3][5] && board[1][5] == board[5][5] && board[1][5] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+		case 15:
+			if (board[0][6] == board[3][6] && board[0][6] == board[6][6] && board[0][6] != 0)
+				cout << currentPlayer << " HAS CREATED A MILL " << endl;
+			return true;
+
+	}
+}
 
 //takes in game board and model of valid board. outputs game board based on which nodes in the valid board are legal nodes
 void displayBoard(vector<vector<int>> board, vector<vector<int>> validBoard, int rows, int cols) {
@@ -64,9 +156,13 @@ void placementStage(Player& white, Player& black, vector<vector<int>> board, vec
 
         //check if move is legal
         if (colNum < validBoard.size() && rowNum < validBoard.size() && validBoard[rowNum][colNum] == 1 && board[rowNum][colNum] == 0)
-        {
+        {	
+			//placing piece
             board[rowNum][colNum] = currentTurnNum;
+
             //check for mill
+			checkForMill(board, true, currentPlayer);
+
             if (currentTurnNum == 1)
             {
                 white.placedPieces += 1;
